@@ -1,0 +1,199 @@
+﻿@model AssetAdminUI.Models.CreateUser
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create New User";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+
+<style>
+    .card {
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .form-control {
+        border-radius: 8px;
+    }
+
+    .input-group .form-control:focus {
+        box-shadow: none;
+    }
+
+    .input-group .form-control {
+        border-radius: 8px 0 0 8px;
+        border-right: none;
+    }
+
+    .input-group .input-group-text {
+        border-radius: 0 8px 8px 0;
+        border-left: none;
+        background: #fff;
+    }
+
+    .password-toggle {
+        cursor: pointer;
+        color: #6c757d;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+        .password-toggle:hover {
+            color: #0d6efd;
+            transform: scale(1.2);
+        }
+
+    .validation-message {
+        font-size: 0.9em;
+        color: red;
+    }
+
+    .valid-check {
+        font-size: 0.9em;
+        color: green;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4 animate__animated animate__fadeInDown">➕ Create New User</h2>
+
+    <div class="card shadow animate__animated animate__fadeInUp">
+        <form asp-action="CreateUser" method="post" id="createUserForm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Username" class="form-label"></label>
+                    <input asp-for="Username" class="form-control" id="Username" />
+                    <div id="usernameCheck" class="validation-message"></div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" type="email" class="form-control" id="Email" />
+                    <div id="emailCheck" class="validation-message"></div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Password" type="password" class="form-control" id="Password" />
+                        <span class="input-group-text">
+                            <i class="bi bi-eye-fill password-toggle" onclick="togglePassword('Password', this)"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="ContactNumber" class="form-label"></label>
+                    <input asp-for="ContactNumber" class="form-control" />
+                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12">
+                    <label asp-for="Address" class="form-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Role" class="form-label"></label>
+                    <select asp-for="Role" class="form-select">
+                        <option value="">-- Select Role --</option>
+                        <option>Admin</option>
+                        <option>Employee</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4 py-2" id="submitBtn" disabled>
+                    <i class="bi bi-person-plus-fill me-1"></i> Create User
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const baseUrl = "http://localhost:5116"; // Your base API
+
+        function togglePassword(inputId, iconEl) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            iconEl.classList.toggle("bi-eye-fill", !isPassword);
+            iconEl.classList.toggle("bi-eye-slash-fill", isPassword);
+        }
+
+        let usernameValid = false;
+        let emailValid = false;
+        const submitBtn = document.getElementById("submitBtn");
+
+        function updateSubmitState() {
+            submitBtn.disabled = !(usernameValid && emailValid);
+        }
+
+        document.getElementById("Username").addEventListener("blur", async function () {
+            const username = this.value.trim();
+            if (username) {
+                const res = await fetch(`${baseUrl}/api/v1/User/check-username?username=${encodeURIComponent(username)}`);
+                const data = await res.json();
+                const checkDiv = document.getElementById("usernameCheck");
+
+                if (data.exists) {
+                    checkDiv.innerText = "❌ Username already taken.";
+                    checkDiv.style.color = "red";
+                    usernameValid = false;
+                } else {
+                    checkDiv.innerText = "✅ Username available.";
+                    checkDiv.style.color = "green";
+                    usernameValid = true;
+                }
+
+                updateSubmitState();
+            }
+        });
+
+        document.getElementById("Email").addEventListener("blur", async function () {
+            const email = this.value.trim();
+            if (email) {
+                const res = await fetch(`${baseUrl}/api/v1/User/check-email?email=${encodeURIComponent(email)}`);
+                const data = await res.json();
+                const checkDiv = document.getElementById("emailCheck");
+
+                if (data.exists) {
+                    checkDiv.innerText = "❌ Email already in use.";
+                    checkDiv.style.color = "red";
+                    emailValid = false;
+                } else {
+                    checkDiv.innerText = "✅ Email available.";
+                    checkDiv.style.color = "green";
+                    emailValid = true;
+                }
+
+                updateSubmitState();
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateSubmitState();
+        });
+    </script>
+}

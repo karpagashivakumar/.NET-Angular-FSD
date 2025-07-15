@@ -1,0 +1,62 @@
+﻿@model List<AssetAdminUI.Models.User>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "User Management";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<h2 class="text-center text-success mb-4">👥 User Management</h2>
+
+<div class="row g-4">
+    @foreach (var user in Model)
+    {
+        <div class="col-md-4">
+            <div class="card shadow-sm animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <h5 class="card-title">@user.FirstName @user.LastName</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@user.Email</h6>
+                    <p class="mb-2"><strong>Username:</strong> @user.Username</p>
+                    <p class="mb-2"><strong>Role:</strong> @user.Role</p>
+                    <p>
+                        <strong>Status:</strong>
+                        @if (user.IsActive)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Inactive</span>
+                        }
+                    </p>
+
+                    <form asp-action="@(user.IsActive ? "Deactivate" : "Activate")" asp-controller="Admin" asp-route-id="@user.UserId" method="post">
+                        <button type="submit" class="btn btn-sm @(user.IsActive ? "btn-warning" : "btn-success")">
+                            <i class="bi @(user.IsActive ? "bi-person-dash-fill" : "bi-person-check-fill")"></i>
+                            @(user.IsActive ? "Deactivate" : "Activate")
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    <script>
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('adminToast');
+            const toastBody = document.getElementById('toastMessage');
+            toast.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+            toast.classList.add(`bg-${type}`);
+            toastBody.innerText = message;
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        @if (TempData["ToastMessage"] != null)
+        {
+            <text>showToast("@TempData["ToastMessage"]", "@TempData["ToastType"]" || "success");</text>
+        }
+        });
+    </script>
+}

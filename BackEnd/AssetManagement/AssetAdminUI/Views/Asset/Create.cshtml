@@ -1,0 +1,67 @@
+﻿@model AssetAdminUI.Models.AssetCreate
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create Asset";
+}
+
+<div class="container mt-4 animate__animated animate__fadeIn">
+    <h2 class="mb-4">Add New Asset</h2>
+
+    <form method="post" asp-action="CreateAsset">
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="AssetNo" class="form-label"></label>
+                <input asp-for="AssetNo" class="form-control" />
+                <span asp-validation-for="AssetNo" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="AssetName" class="form-label"></label>
+                <input asp-for="AssetName" class="form-control" />
+                <span asp-validation-for="AssetName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="AssetCategory" class="form-label"></label>
+                <input asp-for="AssetCategory" class="form-control" />
+                <span asp-validation-for="AssetCategory" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="AssetModel" class="form-label"></label>
+                <input asp-for="AssetModel" class="form-control" />
+                <span asp-validation-for="AssetModel" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="ManufacturingDate" class="form-label"></label>
+                <input asp-for="ManufacturingDate" type="date" class="form-control" />
+                <span asp-validation-for="ManufacturingDate" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="ExpiryDate" class="form-label"></label>
+                <input asp-for="ExpiryDate" type="date" class="form-control" />
+                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AssetValue" class="form-label"></label>
+            <input asp-for="AssetValue" class="form-control" />
+            <span asp-validation-for="AssetValue" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ImageUrl" class="form-label"></label>
+            <input asp-for="ImageUrl" class="form-control" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
+        <a asp-action="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<partial name="_Toast" />

@@ -1,0 +1,52 @@
+﻿@model AssetAdminUI.Models.User
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "My Profile";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<div class="container mt-5">
+    <div class="text-center mb-4 animate__animated animate__fadeInDown">
+        <h2 class="text-primary">👤 Admin Profile</h2>
+        <p class="text-muted">Your current profile details are shown below</p>
+    </div>
+
+    <div class="card shadow-lg border-0 animate__animated animate__zoomIn" style="max-width: 900px; margin: auto;">
+        <div class="card-body p-4">
+            <div class="row g-4 fs-5">
+                <div class="col-md-6">
+                    <p><i class="bi bi-person-badge-fill text-primary me-2"></i><strong>Username:</strong> @Model.Username</p>
+                    <p><i class="bi bi-envelope-fill text-success me-2"></i><strong>Email:</strong> @Model.Email</p>
+                    <p><i class="bi bi-person-fill text-info me-2"></i><strong>First Name:</strong> @Model.FirstName</p>
+                    <p><i class="bi bi-person-fill text-info me-2"></i><strong>Last Name:</strong> @Model.LastName</p>
+                    <p><i class="bi bi-telephone-fill text-secondary me-2"></i><strong>Contact:</strong> @Model.ContactNumber</p>
+                </div>
+
+                <div class="col-md-6">
+                    <p><i class="bi bi-geo-alt-fill text-danger me-2"></i><strong>Address:</strong> @Model.Address</p>
+                    <p><i class="bi bi-person-lines-fill text-secondary me-2"></i><strong>Role:</strong> @Model.Role</p>
+                    <p>
+                        <i class="bi bi-circle-fill me-2 @(Model.IsActive ? "text-success" : "text-danger")"></i><strong>Status:</strong>
+                        @if (Model.IsActive)
+                        {
+                            <span class="text-success fw-bold">Active</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-bold">Inactive</span>
+                        }
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a class="btn btn-outline-primary me-3 px-4" asp-action="EditProfile">
+                    <i class="bi bi-pencil-square"></i> Edit Profile
+                </a>
+                <a class="btn btn-outline-warning px-4" asp-action="ChangePassword">
+                    <i class="bi bi-shield-lock"></i> Change Password
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,171 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<style>
+    .dashboard-card {
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+        .dashboard-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+        }
+
+    .stat-box {
+        border-radius: 0.75rem;
+        padding: 1rem;
+        color: white;
+        text-align: center;
+        transition: 0.3s ease;
+    }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+        }
+
+    .stat-icon {
+        font-size: 2rem;
+    }
+
+    .stat-count {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .stat-label {
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="text-primary animate__animated animate__fadeInDown">👋 Welcome, @ViewBag.Username!</h2>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-3 text-center mb-5">
+        <div>
+            <div class="stat-box bg-primary">
+                <div class="stat-icon mb-2"><i class="bi bi-people-fill"></i></div>
+                <div class="stat-count">@ViewBag.TotalUsers</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+        </div>
+        <div>
+            <div class="stat-box bg-success">
+                <div class="stat-icon mb-2"><i class="bi bi-laptop"></i></div>
+                <div class="stat-count">@ViewBag.TotalAssets</div>
+                <div class="stat-label">Total Assets</div>
+            </div>
+        </div>
+        <div>
+            <div class="stat-box bg-warning">
+                <div class="stat-icon mb-2"><i class="bi bi-box-seam"></i></div>
+                <div class="stat-count">@ViewBag.TotalAllocations</div>
+                <div class="stat-label">Allocations</div>
+            </div>
+        </div>
+        <div>
+            <div class="stat-box bg-danger">
+                <div class="stat-icon mb-2"><i class="bi bi-clipboard-check"></i></div>
+                <div class="stat-count">@ViewBag.TotalAudits</div>
+                <div class="stat-label">Audits</div>
+            </div>
+        </div>
+        <div>
+            <div class="stat-box bg-secondary">
+                <div class="stat-icon mb-2"><i class="bi bi-tools"></i></div>
+                <div class="stat-count">@ViewBag.TotalServiceRequests</div>
+                <div class="stat-label">Service Requests</div>
+            </div>
+        </div>
+        <div>
+            <div class="stat-box bg-info">
+                <div class="stat-icon mb-2"><i class="bi bi-journal-text"></i></div>
+                <div class="stat-count">@ViewBag.TotalAssetRequests</div>
+                <div class="stat-label">Asset Requests</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Cards -->
+    <div class="row justify-content-center">
+        <!-- User Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center dashboard-card shadow animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <i class="bi bi-people-fill fs-1 text-info mb-3"></i>
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text">View, activate or deactivate users in the system.</p>
+                    <a class="btn btn-outline-primary" asp-controller="Admin" asp-action="UserList">View All Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Asset Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center dashboard-card shadow animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <i class="bi bi-laptop fs-1 text-success mb-3"></i>
+                    <h5 class="card-title">Manage Assets</h5>
+                    <p class="card-text">View, create, update or delete asset records.</p>
+                    <a class="btn btn-outline-success me-2" asp-controller="Asset" asp-action="List">View Assets</a>
+                    <a class="btn btn-outline-secondary mt-2" asp-controller="Asset" asp-action="Create">Add New Asset</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Allocation Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center dashboard-card shadow animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <i class="bi bi-box-seam fs-1 text-warning mb-3"></i>
+                    <h5 class="card-title">Manage Allocations</h5>
+                    <p class="card-text">Assign assets to employees and track status.</p>
+                    <a class="btn btn-outline-warning" asp-controller="AssetAllocation" asp-action="List">View Allocations</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audit Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center dashboard-card shadow animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <i class="bi bi-clipboard-check fs-1 text-danger mb-3"></i>
+                    <h5 class="card-title">Manage Audits</h5>
+                    <p class="card-text">Audit asset usage and track pending reviews.</p>
+                    <a class="btn btn-outline-danger" asp-controller="AssetAudit" asp-action="List">View Audits</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Request Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center dashboard-card shadow animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <i class="bi bi-tools fs-1 text-secondary mb-3"></i>
+                    <h5 class="card-title">Service Requests</h5>
+                    <p class="card-text">Track and manage asset repair & issue resolutions.</p>
+                    <a class="btn btn-outline-secondary" asp-controller="ServiceRequest" asp-action="List">View Requests</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Asset Request Card -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center dashboard-card shadow animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <i class="bi bi-journal-text fs-1 text-info mb-3"></i>
+                    <h5 class="card-title">Asset Requests</h5>
+                    <p class="card-text">View and manage asset category-based requests.</p>
+                    <a class="btn btn-outline-info" asp-controller="AssetRequest" asp-action="List">View Requests</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

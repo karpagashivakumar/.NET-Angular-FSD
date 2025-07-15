@@ -1,0 +1,64 @@
+﻿@model List<AssetAdminUI.Models.AssetAuditView>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Audit List";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<div class="container mt-4">
+    <h2 class="mb-4 animate__animated animate__fadeInDown">📋 Asset Audit Logs</h2>
+
+    <form method="get" asp-action="List" class="mb-3 row">
+        <div class="col-md-3">
+            <select name="status" class="form-select" onchange="this.form.submit()">
+                <option value="" selected="@(ViewBag.SelectedStatus == "" ? "selected" : null)">All</option>
+                <option value="pending" selected="@(ViewBag.SelectedStatus == "pending" ? "selected" : null)">Pending</option>
+
+            </select>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" asp-action="Create">➕ Create Audit</a>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-hover shadow animate__animated animate__fadeIn">
+        <thead class="table-dark">
+            <tr>
+                <th>Audit ID</th>
+                <th>Asset</th>
+                <th>Employee</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var audit in Model)
+            {
+                <tr>
+                    <td>@audit.AuditId</td>
+                    <td>@audit.AssetName</td>
+                    <td>@audit.EmployeeName</td>
+                    <td>
+                        <span class="badge bg-@(audit.AuditStatus == "Pending" ? "warning" : "success")">@audit.AuditStatus</span>
+                    </td>
+                    <td>@audit.Notes</td>
+                    <td>
+                        @if (audit.AuditStatus == "Pending")
+                        {
+                            <form method="post" asp-action="Complete">
+                                <input type="hidden" name="AuditId" value="@audit.AuditId" />
+                                <input type="text" name="Notes" class="form-control mb-2" placeholder="Enter completion note" required />
+                                <button type="submit" class="btn btn-sm btn-success">✅ Complete</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,72 @@
+﻿@model List<AssetAdminUI.Models.ServiceRequestView>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Service Requests";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-primary">🛠️ Service Requests</h3>
+        <div class="form-group">
+            <select id="statusFilter" class="form-select">
+                <option value="">All</option>
+                <option value="Open">Open</option>
+                <option value="Assigned">Assigned</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Closed">Closed</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="requestsContainer">
+        @foreach (var req in Model)
+        {
+            <div class="card mb-3 shadow-sm animate__animated animate__fadeIn">
+                <div class="card-body">
+                    <h5 class="card-title">🔧 @req.IssueType</h5>
+                    <p class="card-text">Asset: <strong>@req.AssetNo</strong></p>
+                    <p class="card-text">Employee: @req.EmployeeName</p>
+                    <p class="card-text">Description: @req.Description</p>
+                    <p class="card-text">Status: <span class="badge bg-secondary">@req.ServiceStatus</span></p>
+                    @if (!string.IsNullOrEmpty(req.ResolutionNotes))
+                    {
+                        <p class="text-success">📝 @req.ResolutionNotes</p>
+                    }
+
+                    <div class="d-flex gap-2">
+                        <form asp-action="Assign" method="post" class="d-flex align-items-center">
+                            <input type="hidden" name="id" value="@req.ServiceRequestId" />
+                            <input type="number" name="assignedTo" class="form-control form-control-sm me-2" placeholder="Assign to Emp ID" required />
+                            <button class="btn btn-sm btn-outline-warning" type="submit">Assign</button>
+                        </form>
+
+                        <form asp-action="Resolve" method="post" class="d-flex align-items-center">
+                            <input type="hidden" name="id" value="@req.ServiceRequestId" />
+                            <input type="text" name="notes" class="form-control form-control-sm me-2" placeholder="Resolution notes" required />
+                            <button class="btn btn-sm btn-outline-success" type="submit">Resolve</button>
+                        </form>
+
+                        <form asp-action="Close" method="post">
+                            <input type="hidden" name="id" value="@req.ServiceRequestId" />
+                            <button class="btn btn-sm btn-outline-danger">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("statusFilter").addEventListener("change", function () {
+            const status = this.value;
+            fetch(`/AdminServiceRequest/ListByStatus?status=${status}`)
+                .then(res => res.text())
+                .then(html => document.getElementById("requestsContainer").innerHTML = html);
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

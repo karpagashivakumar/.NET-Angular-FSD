@@ -1,0 +1,37 @@
+﻿@model AssetAdminUI.Models.AssetAllocation
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Allocate Asset";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Allocate Asset</h2>
+
+    <form method="post" asp-action="Create">
+        <div class="mb-3">
+            <label asp-for="AssetId" class="form-label">Asset ID</label>
+            <input asp-for="AssetId" class="form-control" />
+            <span asp-validation-for="AssetId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="EmployeeId" class="form-label">Employee ID</label>
+            <input asp-for="EmployeeId" class="form-control" />
+            <span asp-validation-for="EmployeeId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Remarks" class="form-label">Remarks</label>
+            <textarea asp-for="Remarks" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Submit</button>
+        <a asp-action="List" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

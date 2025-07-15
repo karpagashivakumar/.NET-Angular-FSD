@@ -1,0 +1,60 @@
+﻿@model List<AssetAdminUI.Models.AssetRequestView>
+@{
+    ViewData["Title"] = "Asset Requests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="container mt-4">
+    <h3 class="text-primary mb-4">📥 Asset Requests</h3>
+    <table class="table table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Request ID</th>
+                <th>Employee</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Rejection Reason</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.RequestId</td>
+                    <td>@request.EmployeeName</td>
+                    <td>@request.AssetCategory</td>
+                    <td>@request.RequestDescription</td>
+                    <td>
+                        <span class="badge @(request.RequestStatus == "Pending" ? "bg-warning text-dark" : request.RequestStatus == "Approved" ? "bg-success" : "bg-danger")">
+                            @request.RequestStatus
+                        </span>
+                    </td>
+                    <td>@request.RejectionReason</td>
+                    <td>@request.RequestDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (request.RequestStatus == "Pending")
+                        {
+                            <form method="post" asp-action="Approve" asp-route-id="@request.RequestId" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success">✔ Approve</button>
+                            </form>
+                            <form method="post" asp-action="Reject" class="d-inline">
+                                <input type="hidden" name="id" value="@request.RequestId" />
+                                <input type="text" name="reason" placeholder="Reason" required class="form-control d-inline w-50 me-1" />
+                                <button type="submit" class="btn btn-sm btn-danger">✖ Reject</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

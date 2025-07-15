@@ -1,0 +1,43 @@
+﻿@model List<AssetAdminUI.Models.AssetAllocation>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Asset Allocations";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Asset Allocations</h2>
+
+    <div class="text-end mb-3">
+        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Allocate Asset</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Asset</th>
+                    <th>Employee</th>
+                    <th>Allocated Date</th>
+                    <th>Status</th>
+                    <th>Return Date</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var allocation in Model)
+                {
+                    <tr>
+                        <td>@allocation.AssetName</td>
+                        <td>@allocation.EmployeeName</td>
+                        <td>@allocation.AllocatedDate.ToShortDateString()</td>
+                        <td><span class="badge bg-info">@allocation.AllocationStatus</span></td>
+                        <td>@(allocation.ReturnDate?.ToShortDateString() ?? "-")</td>
+                        <td>@allocation.Remarks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<partial name="_Toast" />

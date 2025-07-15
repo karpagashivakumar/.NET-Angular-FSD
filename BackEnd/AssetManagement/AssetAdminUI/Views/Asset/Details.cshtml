@@ -1,0 +1,33 @@
+﻿@model AssetAdminUI.Models.Asset
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Asset Details";
+}
+
+<div class="container py-5 animate__animated animate__fadeIn">
+    <div class="card shadow-lg border-primary rounded-4">
+        <div class="card-header bg-primary text-white">
+            <h3><i class="bi bi-box"></i> Asset Details - @Model.AssetName</h3>
+        </div>
+        <div class="card-body row">
+            <div class="col-md-6">
+                <p><strong>Asset No:</strong> @Model.AssetNo</p>
+                <p><strong>Category:</strong> @Model.AssetCategory</p>
+                <p><strong>Model:</strong> @Model.AssetModel</p>
+                <p><strong>Value:</strong> ₹@Model.AssetValue</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Status:</strong> @Model.AssetStatus</p>
+                <p><strong>Manufactured On:</strong> @Model.ManufacturingDate.ToShortDateString()</p>
+                <p><strong>Expiry:</strong> @Model.ExpiryDate.ToShortDateString()</p>
+                <p><strong>Description:</strong> @Model.Description</p>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a asp-action="List" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back</a>
+            <a asp-action="Edit" asp-route-id="@Model.AssetId" class="btn btn-primary"><i class="bi bi-pencil"></i> Edit</a>
+        </div>
+    </div>
+</div>
+
+<partial name="_Toast" />
