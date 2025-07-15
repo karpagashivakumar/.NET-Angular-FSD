@@ -1,0 +1,52 @@
+/* Card hover effect */
+.card:hover {
+  transform: scale(1.01);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Input and textarea styling */
+textarea,
+input {
+  border-radius: 0.5rem;
+}
+
+/* Card header style */
+.card-header {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Button focus & hover effects */
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+button:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s;
+}
+
+/* Large button styling */
+.btn-lg {
+  font-size: 1.1rem;
+  padding: 10px;
+}
+
+/* Badge font size */
+.badge {
+  font-size: 0.85rem;
+}
+
+/* Colored left border for different statuses (use class combinations correctly) */
+.card-header.status-success {
+  border-left: 5px solid #28a745; /* Green */
+}
+
+.card-header.status-danger {
+  border-left: 5px solid #dc3545; /* Red */
+}
+
+.card-header.status-warning {
+  border-left: 5px solid #ffc107; /* Yellow */
+}

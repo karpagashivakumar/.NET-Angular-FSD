@@ -1,0 +1,67 @@
+<div class="container mt-5 d-flex justify-content-center animate__animated animate__fadeInDown">
+  <div class="card profile-card p-4 shadow-lg w-100" style="max-width: 800px;">
+    <div class="text-center mb-4">
+      <img src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png" alt="User Icon"
+           width="100" class="mb-3 profile-icon" />
+      <h3 class="fw-bold text-primary">👤 My Profile</h3>
+      <p class="text-muted">View and manage your personal information</p>
+    </div>
+
+    <div *ngIf="user" class="profile-info">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-person-circle me-2 text-primary"></i>First Name:</label>
+            <div>{{ user.firstName }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-person-badge-fill me-2 text-primary"></i>Last Name:</label>
+            <div>{{ user.lastName }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-person-lines-fill me-2 text-primary"></i>Username:</label>
+            <div>{{ user.username }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-patch-check-fill me-2 text-primary"></i>Status:</label>
+            <div>
+              <span class="badge px-3 py-1 fs-6" [ngClass]="user.isActive ? 'bg-success' : 'bg-secondary'">
+                {{ user.isActive ? 'Active ✅' : 'Inactive ❌' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-envelope-fill me-2 text-primary"></i>Email:</label>
+            <div>{{ user.email }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-shield-lock-fill me-2 text-primary"></i>Role:</label>
+            <div>{{ user.role }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-telephone-fill me-2 text-primary"></i>Contact:</label>
+            <div>{{ user.contactNumber }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-box">
+            <label><i class="bi bi-geo-alt-fill me-2 text-primary"></i>Address:</label>
+            <div>{{ user.address || 'N/A' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

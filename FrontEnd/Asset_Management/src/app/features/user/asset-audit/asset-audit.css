@@ -1,0 +1,27 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
+@import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css";
+
+textarea, input {
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.audit-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 1rem;
+}
+
+.audit-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.15);
+}
+
+button:hover {
+  transform: scale(1.03);
+  transition: 0.2s ease-in-out;
+}

@@ -1,0 +1,66 @@
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <div class="text-center mb-4">
+    <h2 class="text-primary fw-bold">📝 My Asset Allocations</h2>
+    <p class="text-muted">Track all assets currently allocated to you</p>
+  </div>
+
+  <!-- Filter Buttons -->
+  <div class="d-flex justify-content-center gap-3 mb-4">
+    <button class="btn btn-outline-primary" [class.active]="filterStatus === 'All'" (click)="filterStatus='All'; applyFilter()">All</button>
+    <button class="btn btn-outline-success" [class.active]="filterStatus === 'Active'" (click)="filterStatus='Active'; applyFilter()">Active</button>
+    <button class="btn btn-outline-secondary" [class.active]="filterStatus === 'Returned'" (click)="filterStatus='Returned'; applyFilter()">Returned</button>
+  </div>
+
+  <!-- Allocations -->
+  <div *ngIf="filteredAllocations.length > 0; else noData" class="row g-4">
+    <div class="col-md-4" *ngFor="let item of filteredAllocations">
+      <div class="card h-100 shadow-sm allocation-card">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.assetName }}</h5>
+          <p class="card-text">
+            <strong>Status:</strong>
+            <span class="badge"
+                  [ngClass]="{
+                    'bg-success': item.allocationStatus === 'Active',
+                    'bg-danger': item.allocationStatus === 'Returned'
+                  }">{{ item.allocationStatus }}</span><br />
+            <strong>Allocated:</strong> {{ formatDate(item.allocatedDate) }}<br />
+            <strong>Returned:</strong> {{ item.returnDate ? formatDate(item.returnDate) : 'Not Returned' }}<br />
+            <strong>Remarks:</strong> {{ item.remarks || '—' }}
+          </p>
+
+          <!-- Return Button for Active Assets -->
+          <div *ngIf="item.allocationStatus === 'Active'">
+            <button class="btn btn-sm btn-warning mt-2 w-100" data-bs-toggle="modal" data-bs-target="#returnModal" (click)="prepareReturn(item.allocationId)">
+              Return Asset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Return Modal -->
+  <div class="modal fade" id="returnModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Return Asset</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label for="remarks">Return Remarks:</label>
+          <textarea class="form-control mt-2" [(ngModel)]="returnRemarks" rows="3" id="remarks"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" (click)="returnAsset()" data-bs-dismiss="modal">Confirm Return</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <div class="text-center mt-4 text-muted">No allocations found.</div>
+  </ng-template>
+</div>

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 sticky-top">
+  <a class="navbar-brand fw-bold text-light" routerLink="/dashboard">
+    🛠️ Asset Hub
+  </a>
+
+  <ul class="navbar-nav ms-auto d-flex flex-row align-items-center gap-2">
+    <li class="nav-item">
+      <a routerLink="/dashboard" class="btn btn-outline-light">🏠 Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/profile" class="btn btn-outline-light">📄 Profile</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/asset" class="btn btn-outline-light">📦 Assets</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/asset-allocation" class="btn btn-outline-light">📋 Allocations</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/service-request" class="btn btn-outline-light">🛠️ Service Requests</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/asset-request" class="btn btn-outline-light">📨 Asset Request</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/asset-audit" class="btn btn-outline-light">📊 Audits</a>
+    </li>
+    <li class="nav-item text-white fw-semibold">
+  Employee <small class="text-warning">({{ username }})</small>
+</li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown">
+        ⚙️ Settings
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a routerLink="/profile" class="dropdown-item">👤 View Profile</a></li>
+        <li><a (click)="logout()" class="dropdown-item text-danger">🚪 Logout</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>

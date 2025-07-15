@@ -1,0 +1,36 @@
+<!-- login.html -->
+<div class="d-flex justify-content-center align-items-center bg-gradient-custom"
+     style="min-height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;">
+  <div class="login-box card shadow border-0 p-4 w-100" style="max-width: 450px;">
+    <div class="card-body">
+      <h3 class="text-center text-primary mb-4">🔐 Employee Login</h3>
+
+      <form (submit)="login()" novalidate>
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" [(ngModel)]="username" name="username" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <div class="input-group">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control"
+              [(ngModel)]="password"
+              name="password"
+              required
+            />
+            <span class="input-group-text" style="cursor: pointer;" (click)="togglePassword()">
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+.asset-card {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+.asset-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-title {
+  font-size: 1.2rem;
+}
+
+.bi {
+  line-height: 1;
+}
+
+input.form-control, select.form-select {
+  border-radius: 8px;
+}
+

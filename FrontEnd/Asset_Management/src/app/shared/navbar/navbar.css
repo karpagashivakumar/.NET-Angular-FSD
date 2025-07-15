@@ -1,0 +1,37 @@
+.navbar {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  font-family: 'Poppins', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #ff4081;
+  text-decoration: none;
+  border: none;
+}
+
+.navbar .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #0d6efd;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.05);
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #0d6efd;
+}
+
+.navbar .text-warning {
+  font-weight: 500;
+}
+
+.bg-dark-mode {
+  background-color: #121212 !important;
+  color: #e4e4e4 !important;
+}
+

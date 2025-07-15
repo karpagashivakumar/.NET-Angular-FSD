@@ -1,0 +1,12 @@
+<!-- ✅ app.component.html -->
+<ng-container *ngIf="!isLoginPage(); else loginPage">
+  <app-navbar></app-navbar>
+
+  <main class="container mt-5">
+    <router-outlet></router-outlet>
+  </main>
+</ng-container>
+
+<ng-template #loginPage>
+  <router-outlet></router-outlet>
+</ng-template>

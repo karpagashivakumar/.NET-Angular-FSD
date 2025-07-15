@@ -1,0 +1,38 @@
+/* styles.css */
+
+@import 'ngx-toastr/toastr';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Optional: ensure scrollbars are hidden */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
+body.bg-dark-mode .navbar {
+  background-color: #1f1f1f !important;
+}
+
+body.bg-dark-mode .card {
+  background-color: #2a2a2a !important;
+  color: #e4e4e4 !important;
+}
+
+body.bg-dark-mode .btn-outline-light {
+  color: #e4e4e4;
+  border-color: #e4e4e4;
+}
+
+/* Employee login background */
+.bg-gradient-custom {
+  background: linear-gradient(to right, #ff9966, #ff5e62);
+}

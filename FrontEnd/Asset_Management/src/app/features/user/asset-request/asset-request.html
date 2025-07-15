@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <h2 class="text-primary text-center mb-4 animate__animated animate__fadeInDown">📦 Asset Requests</h2>
+
+  <!-- Compact Request Form -->
+  <div class="card shadow animate__animated animate__fadeInUp mb-4 border-0">
+    <div class="card-header bg-gradient text-white" style="background: linear-gradient(to right, #00c6ff, #0072ff);">
+      <strong><i class="bi bi-plus-circle"></i> Raise New Request</strong>
+    </div>
+    <div class="card-body p-3">
+      <form (ngSubmit)="submitRequest()" class="row g-2">
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Asset Category</label>
+          <input class="form-control form-control-sm" [(ngModel)]="newRequest.assetCategory" name="assetCategory" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold">Request Description</label>
+          <input class="form-control form-control-sm" [(ngModel)]="newRequest.requestDescription" name="requestDescription" required />
+        </div>
+        <div class="col-12 text-end mt-2">
+          <button type="submit" class="btn btn-sm btn-primary shadow-sm">
+            <i class="bi bi-send-fill"></i> Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Request List -->
+  <div *ngIf="requests.length > 0" class="row g-3">
+    <div class="col-md-6" *ngFor="let r of requests">
+      <div class="card shadow-sm border-0 animate__animated animate__fadeInUp">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-tags"></i> {{ r.assetCategory }}</span>
+          <span class="badge bg-{{ getBadgeClass(r.requestStatus) }}">{{ r.requestStatus }}</span>
+        </div>
+        <div class="card-body">
+          <p><i class="bi bi-person"></i> Employee: {{ r.employeeName }}</p>
+          <p><i class="bi bi-info-circle"></i> Description: {{ r.requestDescription }}</p>
+          <p *ngIf="r.rejectionReason"><i class="bi bi-x-circle text-danger"></i> Reason: {{ r.rejectionReason }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="requests.length === 0" class="text-center text-muted mt-3">No asset requests found.</div>
+</div>

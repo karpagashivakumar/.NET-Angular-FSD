@@ -1,0 +1,71 @@
+<!-- service-request.component.html -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <div class="text-center mb-4">
+    <h2 class="text-primary fw-bold">🛠️ My Service Requests</h2>
+    <p class="text-muted">Track your active and resolved service issues</p>
+  </div>
+
+  <!-- Request Form -->
+  <div class="card shadow-lg border-0 mb-5 animate__animated animate__fadeInUp">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Raise a New Request</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="submitRequest()">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Asset No</label>
+            <input class="form-control" [(ngModel)]="newRequest.assetNo" name="assetNo" required placeholder="Enter Asset No" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Asset ID</label>
+            <input class="form-control" type="number" [(ngModel)]="newRequest.assetId" name="assetId" required placeholder="Enter Asset ID" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Issue Type</label>
+            <input class="form-control" [(ngModel)]="newRequest.issueType" name="issueType" required placeholder="E.g., Hardware Failure" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="newRequest.description" name="description" rows="2" required placeholder="Describe the issue..."></textarea>
+          </div>
+        </div>
+        <div class="text-end mt-3">
+          <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-send-fill me-1"></i>Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Requests List -->
+  <div *ngIf="requests.length > 0" class="row g-4">
+    <div class="col-md-6" *ngFor="let r of requests">
+      <div class="card shadow-sm border-0 h-100 animate__animated animate__fadeInUp">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+          <span class="fw-semibold"><i class="bi bi-cpu me-2"></i>Asset: {{ r.assetNo }}</span>
+          <span class="badge rounded-pill"
+            [ngClass]="{
+              'bg-warning text-dark': r.serviceStatus === 'Open',
+              'bg-success': r.serviceStatus === 'Resolved',
+              'bg-secondary': r.serviceStatus === 'Closed'
+            }">{{ r.serviceStatus }}</span>
+        </div>
+        <div class="card-body">
+          <p class="mb-1"><i class="bi bi-bug-fill me-2 text-danger"></i><strong>Issue:</strong> {{ r.issueType }}</p>
+          <p class="mb-1"><i class="bi bi-info-circle-fill me-2 text-primary"></i><strong>Description:</strong> {{ r.description }}</p>
+          <p class="mb-0"><i class="bi bi-check-circle-fill me-2 text-success"></i><strong>Resolution:</strong> {{ r.resolutionNotes || 'Pending' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="requests.length === 0" class="text-center text-muted mt-4">
+    <i class="bi bi-exclamation-circle me-2"></i>No service requests found.
+  </div>
+</div>

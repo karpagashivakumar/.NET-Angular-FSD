@@ -1,0 +1,22 @@
+<!-- ✅ dashboard.html -->
+<div class="container mt-5">
+  <h2 class="text-center text-primary animate__animated animate__fadeInDown mb-5">
+    👋 Welcome, {{ username }}!
+  </h2>
+
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4" *ngFor="let card of dashboardCards">
+      <a [routerLink]="card.route" class="text-decoration-none">
+        <div class="card dashboard-card shadow-lg text-center animate__animated animate__fadeInUp">
+          <div class="card-body">
+            <div class="icon-container mb-3">
+              <i [class]="card.icon"></i>
+            </div>
+            <h5 class="card-title">{{ card.title }}</h5>
+            <p class="card-text text-muted">{{ card.description }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

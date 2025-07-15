@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <h2 class="text-center text-primary mb-4 animate__animated animate__fadeInDown">📋 My Asset Audits</h2>
+
+  <div *ngIf="audits.length > 0" class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let a of audits">
+      <div class="card shadow-lg audit-card animate__animated animate__fadeInUp">
+        <div class="card-header d-flex justify-content-between align-items-center bg-light">
+          <span><i class="bi bi-box-seam text-secondary"></i> {{ a.assetName }}</span>
+          <span class="badge"
+                [ngClass]="{
+                  'bg-warning': a.auditStatus === 'Pending',
+                  'bg-success': a.auditStatus === 'Completed'
+                }">
+            {{ a.auditStatus }}
+          </span>
+        </div>
+        <div class="card-body">
+          <p><i class="bi bi-person-circle"></i> Employee: {{ a.employeeName }}</p>
+          <p><i class="bi bi-chat-dots"></i> Notes: {{ a.auditNotes || 'No notes added' }}</p>
+          <button *ngIf="a.auditStatus === 'Pending'"
+                  class="btn btn-sm btn-success mt-2"
+                  (click)="completeAudit(a.auditId!)">
+            <i class="bi bi-check-circle"></i> Complete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="audits.length === 0" class="text-muted text-center animate__animated animate__fadeIn">
+    <i class="bi bi-info-circle"></i> No audits found.
+  </div>
+</div>

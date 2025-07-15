@@ -1,0 +1,49 @@
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <div class="text-center mb-4">
+    <h2 class="text-gradient fw-bold display-6">📦 Available Assets</h2>
+    <p class="text-muted fs-5">Explore company assets, filter by category or search</p>
+  </div>
+
+  <!-- 🔍 Search and Filter -->
+  <div class="row mb-4 align-items-end">
+    <div class="col-md-6 mb-2">
+      <input type="text" class="form-control shadow-sm" [(ngModel)]="searchTerm" placeholder="Search by name or number..." />
+    </div>
+    <div class="col-md-4 mb-2">
+      <select class="form-select shadow-sm" [(ngModel)]="selectedCategory">
+        <option value="">All Categories</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+    <div class="col-md-2 mb-2">
+      <button class="btn btn-outline-secondary w-100" (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <!-- 📦 Assets List -->
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let asset of filteredAssets()">
+      <div class="card shadow asset-card h-100 border-0">
+        <div class="text-center pt-4">
+          <i [ngClass]="getAssetIcon(asset.assetCategory)" class="display-3 text-primary"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title fw-semibold text-primary">{{ asset.assetName }}</h5>
+          <ul class="list-unstyled small text-dark mb-3">
+            <li><i class="bi bi-hash text-secondary me-2"></i><strong>No:</strong> {{ asset.assetNo }}</li>
+            <li><i class="bi bi-tags-fill text-secondary me-2"></i><strong>Category:</strong> {{ asset.assetCategory }}</li>
+            <li><i class="bi bi-currency-rupee text-secondary me-2"></i><strong>Value:</strong> ₹{{ asset.assetValue }}</li>
+            <li>
+              <i class="bi bi-circle-fill me-2" [ngClass]="{
+                'text-success': asset.assetStatus === 'Available',
+                'text-warning': asset.assetStatus === 'In Use',
+                'text-danger': asset.assetStatus === 'Disposed'
+              }"></i>
+              <strong>Status:</strong> {{ asset.assetStatus }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
